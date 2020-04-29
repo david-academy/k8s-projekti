@@ -1,0 +1,3 @@
+containers:
+        - name: webapi-client
+          image: k8sdemo112233.azurecr.io/webapi-client:v1
