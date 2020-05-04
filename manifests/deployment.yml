@@ -1,0 +1,16 @@
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: davidacademyksprojekti 
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: davidacademyksprojekti 
+    spec:
+      containers:
+        - name: davidacademyksprojekti 
+          image: digiak8sregistry.azurecr.io/davidacademyksprojekti
+          ports:
+          - containerPort: 3001
