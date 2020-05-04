@@ -1,26 +1,17 @@
-version: "2"
+version: '3'
 services:
     client:
-        image: webapp-client
-        restart: always
+        image: react:app
         ports:
-            - "3000:3000"
-        volumes:
-            - ./client:/client/src/app
-        links:
+            - '3000:3000'
+        depends_on:
             - api
-        networks:
-            - webappnetwork
+        environment:
+            - NODE_ENV=development
+        stdin_open: true
+        tty: true
     api:
-        image: webapp-api
-        restart: always
+        build: ./api
         ports:
-            - "3001:3001"
-        volumes:
-            - ./api:/api
-            - /api/node_modules
-        networks:
-            - webappnetwork
-networks:
-    webappnetwork:
-        driver: bridge
+            - '3001:3001'
+    
