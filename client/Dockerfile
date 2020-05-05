@@ -1,23 +1,12 @@
-FROM node:10-alpine as build
+FROM mhart/alpine-node:10.5.0
 
-WORKDIR /client
+WORKDIR /usr/src/app
+COPY package*.json ./
 
-COPY package.json /client/package.json
+RUN npm install --silent
 
-RUN npm install
-RUN npm install react-scripts -g
+COPY . .
 
-COPY . /client
+EXPOSE 8080
 
-RUN npm run build
-
-FROM nginx:1.16.0
-
-COPY --from=build /client/build /usr/share/nginx/html
-
-RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx/nginx.conf /etc/nginx/conf.d
-
-EXPOSE 80
-
-CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
+CMD ["npm", "start"]
