@@ -100,6 +100,8 @@ const App= () => {
     return(
       <div>
         <Notification notification={notificationMessage} />
+        <h2>How very wonderful this is.. or is it</h2>
+
         <h2>Sign in</h2>
         <form onSubmit={handleLogin}>
             username

@@ -4,20 +4,17 @@
   "private": true,
   "dependencies": {
     "axios": "^0.19.0",
+    "env-cmd": "^10.1.0",
     "prop-types": "^15.7.2",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1"
   },
   "scripts": {
     "start": "export PORT=8080 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "eslint": "eslint ."
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "eject": "react-scripts eject"
   },
   "browserslist": {
     "production": [
@@ -33,7 +30,6 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.1.2",
-    "@testing-library/react": "^9.3.0",
-    "eslint-plugin-jest": "^22.19.0"
+    "@testing-library/react": "^9.3.0"
   }
 }
