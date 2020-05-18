@@ -28,15 +28,11 @@ const getTokenFrom = request =>{
             return response.status(401).json({error: 'token missing or invalid'})
         }
     
-    
-
-    const user = await User.findById(body.userId)
-    
-    try{
-    		    const blog = new Blog({
-			    title: body.title,
-			    author: body.author,
-			    url: body.url,
+    const user = await User.findById(decodedToken.id)
+                const blog = new Blog({
+                title: body.title,
+                author: body.author,
+                url: body.url,
                 likes: body.likes === undefined 
                     ? 0 
                     : body.likes,
@@ -46,16 +42,30 @@ const getTokenFrom = request =>{
         const result = await blog.save()
         user.blogs = user.blogs.concat(result._id)
         await user.save()
-		response.json(result.toJSON())
-	
-    } catch (exception){
-    console.log('Ooops', exception)
-    }
+        response.json(result.toJSON())
+    
+    
   } catch (exception){
       console.log('WEEEE! ', exception)
   }
   })
 
+  blogRouter.put('/:id', (request, response, next) =>{
+    const body = request.body
+  
+    const blog = {
+      title: body.title,
+      author: body.author,
+      url: body.url,
+      likes: body.likes
+    }
+  
+    Blog.findByIdAndUpdate(request.params.id, blog, {new: true})
+      .then(updatedBlog =>{
+        response.json(updatedBlog.toJSON())
+      })
+      .catch(error => next(error))
+  })
   blogRouter.delete('/:id', async (request, response)=>{
     const token = getTokenFrom(request)
     try{
@@ -76,23 +86,6 @@ const getTokenFrom = request =>{
         console.log('Whoops.. seems like you cannot do that! ', exception)
     }
   })
-  blogRouter.put('/:id', async(request, response)=>{
-      const body = request.body
-        const blog ={
-            title: body.title,
-            author: body.author,
-            url: body.url,
-            likes: body.likes,
-            
-        }
-      
-        
-        await Blog.findByIdAndUpdate(request.params.id, body, {new: true})
-            .then(updatedBlog=>{
-                response.json(updatedBlog.toJSON())
-            })
-            .catch(error => 'error')
-  } )
 
 
   module.exports = blogRouter
